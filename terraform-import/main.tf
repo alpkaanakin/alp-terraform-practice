@@ -1,5 +1,5 @@
 resource "aws_vpc" "imported_vpc" {
-  cidr_block =  "10.0.0.0/16"
+  cidr_block =  var.vpc-cidr
   tags = {
     Name = "my-import-vpc"
   }
@@ -7,10 +7,11 @@ resource "aws_vpc" "imported_vpc" {
 
 resource "aws_instance" "imported-EC2"{
 
-ami = "ami-06c39ed6b42908a36"
-instance_type = "t2.micro"
+ami = var.base-ami
+instance_type = var.base-ec2-type
 subnet_id = aws_subnet.public-subnet-1a.id
-key_name = "EC2-Hack"
+key_name = var.base-keyName
+vpc_security_group_ids = ["sg-01ab34d6f8f29ecc1"]
 
 
 
@@ -19,8 +20,8 @@ key_name = "EC2-Hack"
 
 resource "aws_subnet" "public-subnet-1a" {
   vpc_id = aws_vpc.imported_vpc.id
-  cidr_block = "10.0.0.0/24"
-  availability_zone = "eu-central-1a"
+  cidr_block = var.public-subnet-1a-cidr
+  availability_zone = var.public-subnet-1a-az
 
     tags = {
     Name = "public-subnet-a1"
@@ -34,7 +35,11 @@ resource "aws_route_table" "routeTable" {
     tags = {
     Name = "public-route-table"
   }
-  
 
+}
+
+resource "aws_route_table_association" "a" {
+  subnet_id      = aws_subnet.public-subnet-1a.id
+  route_table_id = aws_route_table.routeTable.id
 }
 
