@@ -1,3 +1,8 @@
+################################################################################
+# vpc
+################################################################################
+
+
 variable "create_vpc" {
   description = "Controls if VPC should be created (it affects almost all resources)"
   type        = bool
@@ -21,6 +26,35 @@ variable "instance_tenancy" {
   type        = string
   default     = "default"
 }
+
+
+################################################################################
+# subnets
+################################################################################
+
+variable "public_subnets" {
+  description = "A list of public subnets inside the VPC"
+  type        = list(string)
+  default     = []
+}
+
+variable "private_subnets" {
+  description = "A list of private subnets inside the VPC"
+  type        = list(string)
+  default     = []
+}
+
+variable "availability_zones" {
+  type        = list
+  description = "AZ in which all the resources will be deployed"
+  default = []
+}
+
+
+################################################################################
+# tags
+################################################################################
+
 
 variable "tags" {
   description = "A map of tags to add to all resources"
@@ -46,11 +80,6 @@ variable "public_subnet_tags" {
   default     = {}
 }
 
-variable "public_subnet_tags_per_az" {
-  description = "Additional tags for the public subnets where the primary key is the AZ"
-  type        = map(map(string))
-  default     = {}
-}
 
 variable "private_subnet_tags" {
   description = "Additional tags for the private subnets"
