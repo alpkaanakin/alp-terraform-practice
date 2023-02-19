@@ -13,7 +13,9 @@ subnet_id = aws_subnet.public-subnet-1a.id
 key_name = var.base-keyName
 vpc_security_group_ids = ["sg-01ab34d6f8f29ecc1"]
 
-
+  tags = {
+    Name = "my-import-vpc"
+  }
 
 }
 
