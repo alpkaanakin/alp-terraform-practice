@@ -1,3 +1,8 @@
+variable "aws_region" {
+  default = "eu-central-1"
+}
+
+
 ################################################################################
 # vpc
 ################################################################################
@@ -44,13 +49,14 @@ variable "private_subnets" {
   default     = []
 }
 
+
 variable "availability_zones" {
-  type        = list
+  type        = list(any)
   description = "AZ in which all the resources will be deployed"
-  default = []
+  default     = []
 }
 
-
+# ["${var.aws_region}a", "${var.aws_region}b", "${var.aws_region}c"]
 ################################################################################
 # tags
 ################################################################################

@@ -27,11 +27,11 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private" {
-
-  for_each = toset(var.private_subnets)
+  count = length(var.private_subnets) > 0 ? length(var.private_subnets) : 0
+  availability_zone       = element(var.availability_zones, count.index)
 
   vpc_id     = aws_vpc.main.id
-  cidr_block = each.value
+  cidr_block = var.private_subnets[count.index]
 
   tags = {
     Name = "Main"
