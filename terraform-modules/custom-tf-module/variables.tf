@@ -3,6 +3,8 @@ variable "aws_region" {
 }
 
 
+
+
 ################################################################################
 # vpc
 ################################################################################
@@ -65,15 +67,15 @@ variable "availability_zones" {
 ################################################################################
 
 variable "ec2_ami" {
-  type = string
+  type        = string
   description = ""
-  default = "ami-0c0d3776ef525d5dd"
+  default     = "ami-0c0d3776ef525d5dd"
 }
 
 variable "ec2_type" {
-  type = string
+  type        = string
   description = ""
-  default = "t2.micro"
+  default     = "t2.micro"
 }
 
 
