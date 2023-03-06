@@ -98,7 +98,7 @@ resource "aws_security_group" "public_sec" {
     }
     tags = merge(
         {Name = var.name},
-        {"sec" = "vpc-allowed"}
+        {"sec" = "all-allowed"}
     )
     
 }
