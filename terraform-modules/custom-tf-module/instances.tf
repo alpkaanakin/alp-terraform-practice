@@ -9,7 +9,7 @@ resource "aws_instance" "demo_public"{
         aws_subnet.private
     ]
 
-    vpc_security_group_ids = [aws_security_group.only_ssh_vpc.id]
+    vpc_security_group_ids = [aws_security_group.public_sec.id]
 
     
 
@@ -66,6 +66,35 @@ resource "aws_security_group" "only_ssh_vpc" {
         to_port = 80
         protocol = "tcp"
         cidr_blocks = [aws_vpc.main.cidr_block]
+    }
+    tags = merge(
+        {Name = var.name},
+        {"sec" = "vpc-allowed"}
+    )
+    
+}
+
+
+resource "aws_security_group" "public_sec" {
+    vpc_id = "${aws_vpc.main.id}"
+    
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = -1
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    ingress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    ingress {
+        from_port = 80
+        to_port = 80
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
     }
     tags = merge(
         {Name = var.name},
