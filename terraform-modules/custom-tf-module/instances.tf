@@ -68,8 +68,7 @@ resource "aws_security_group" "only_ssh_vpc" {
         cidr_blocks = [aws_vpc.main.cidr_block]
     }
     tags = merge(
-        {Name = var.name},
-        {"sec" = "vpc-allowed"}
+        {Name = "${var.name}-only-ssh-vpc"},
     )
     
 }
@@ -96,9 +95,10 @@ resource "aws_security_group" "public_sec" {
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+
+    
     tags = merge(
-        {Name = var.name},
-        {"sec" = "all-allowed"}
+        {Name = "${var.name}-allow-all"},
     )
     
 }

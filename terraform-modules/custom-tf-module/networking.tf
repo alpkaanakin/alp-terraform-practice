@@ -21,7 +21,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "Main"
+    Name = "public-subnets"
   }
 }
 
@@ -33,7 +33,7 @@ resource "aws_subnet" "private" {
   cidr_block = var.private_subnets[count.index]
 
   tags = {
-    Name = "Main"
+    Name = "private-subnets"
   }
 }
 
